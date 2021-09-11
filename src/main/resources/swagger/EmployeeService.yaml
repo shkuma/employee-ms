@@ -1,0 +1,106 @@
+swagger: "2.0"
+info:
+  title: "Implement notification emitter Service using microservice architecture"
+  description: "Implement notification emitter Service using microservice architecture"
+  version: "1.0.0"
+host: www
+schemes:
+  - http
+basePath: /employeeService/v1
+paths:
+  /employees:
+    get:
+      tags:
+        - "get Employees in bulk"
+      summary: "get Employees in bulk"
+      operationId: getEmployees
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK - The Employee was retrieved successfully"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Employee"
+            minItems: 0
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    post:
+      tags:
+        - "Save List of Employee"
+      operationId: addEmployeeList
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "employee"
+          in: body
+          description: List of Employee
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Employee"
+      responses:
+        200:
+          description: "OK - The Employees was Created successfully"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Employee"
+            minItems: 0
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+definitions:
+  Employee:
+    type: "object"
+    properties:
+      employeeId:
+        type: "integer"
+        description: "employee id"
+      employeeName:
+        type: "string"
+        description: "employeeName"
+      address:
+        type: "string"
+        description: "address"
+      mobileNumber:
+        type: "string"
+        description: "mobile number"
+  ErrorResponse:
+    type: "object"
+    required:
+      - "code"
+      - "reason"
+    properties:
+      code:
+        type: "string"
+        description: "The code of the response"
+      reason:
+        type: "string"
+        description: "Explanation of the reason for the error"
+      message:
+        type: "string"
+        description: "message"
+      traceId:
+        type: "string"
+        description: "traceid"
+
